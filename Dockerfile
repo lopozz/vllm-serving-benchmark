@@ -6,13 +6,14 @@ RUN pip install 'cmake>=3.26' numpy
 
 WORKDIR /app
 
-# RUN git config --global http.postBuffer 104857600
+RUN mkdir -p /app/data && \
+    wget https://huggingface.co/datasets/anon8231489123/ShareGPT_Vicuna_unfiltered/resolve/main/ShareGPT_V3_unfiltered_cleaned_split.json -O /app/data/ShareGPT_V3_unfiltered_cleaned_split.json
+
 RUN git clone https://github.com/vllm-project/vllm.git
 WORKDIR /app/vllm
 RUN pip install -e . -v
 
-RUN mkdir -p /app/data && \
-    wget https://huggingface.co/datasets/anon8231489123/ShareGPT_Vicuna_unfiltered/resolve/main/ShareGPT_V3_unfiltered_cleaned_split.json -O /app/data/ShareGPT_V3_unfiltered_cleaned_split.json
+
 # COPY ~/.cache/huggingface /root/.cache/huggingface
 
 # RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
